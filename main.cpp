@@ -19,7 +19,6 @@ void deletes_list(Node *&);    // Function Prototype to delete list
 int main()
 {
    Node *head = nullptr;    // head pointer initialized to nullptr
-    
     creates_list(head);    // Function call to create linked list
     deletes_node(head);    // Function call to delete node
     inserts_node(head);    // Function call to insert node
@@ -27,7 +26,6 @@ int main()
     
    return 0;
 }
-
 
 void output(Node * &hd)
 {
@@ -80,7 +78,7 @@ void deletes_node(Node * &head)
     current = head;    // current & prev set to point at head (start of the list)
     prev = head;
     
-    for (int i = 0; i < (entry-1); i++)
+    for (int i = 0; i < (entry-1); i++)    //current & prev move to posotion relative to entry
         if (i == 0)
             current = current->next;
         else {
@@ -89,19 +87,18 @@ void deletes_node(Node * &head)
         }
 
     if (current) {
-        if (current == head) {
-            Node * temp = head;
+        if (current == head) {     // if current is still set to head (entry was the start of the list) temp is used to delete that node and set a new head of the list
+            Node *temp = head;
             head = head->next;
             delete temp;
             temp = nullptr;
         }
-        else {
+        else {    // else, prev used to asisst in delting the node
             prev->next = current->next;
             delete current;
             current = nullptr;
         }
     }
-    
     output(head);
 }
 
@@ -112,15 +109,13 @@ void inserts_node(Node * &head)
     int entry;
 
     cout << "After which node to insert 10000? " << endl;
-    int count = 1;
-    while (current) {
-        cout << "[" << count++ << "] " << current->value << endl;
-        current = current->next;
-    }
+    output(head);
     cout << "Choice --> ";
     cin >> entry;
+    
     current = head;
     prev = head;
+    
     for (int i = 0; i < (entry-1); i++)
         if (i == 0)
             current = current->next;
@@ -129,13 +124,13 @@ void inserts_node(Node * &head)
             prev = prev->next;
         }
     
-    if (entry == 1) {
-        Node * newnode = new Node;
+    if (entry == 1) {    // if the node slected was the first, newnode is set as the new head
+        Node *newnode = new Node;
         newnode->value = 10000;
         newnode->next = head->next;
         head = newnode;
     }
-    if (entry > 1) { //at this point, insert a node between prev and current
+    if (entry > 1) {    //insert a node between prev and current
         Node * newnode = new Node;
         newnode->value = 10000;
         newnode->next = current;
@@ -146,7 +141,7 @@ void inserts_node(Node * &head)
 
 void deletes_list(Node * &head)
 {
-    Node * current = head;
+    Node *current = head;
     while (current) {
         head = current->next;
         delete current;
